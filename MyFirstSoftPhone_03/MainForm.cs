@@ -25,13 +25,18 @@ namespace MyFirstSoftPhone_03
 
         private bool localHeld;
 
-        public MainForm()
+        private string username;
+        private string pass;
+
+        public MainForm(string username, string pass)
         {
             InitializeComponent();
+            this.username = username;
+            this.pass = pass;
         }
 
 
-        private void InitializeSoftPhone()
+        private void InitializeSoftPhone(string username, string pass)
         {
             try
             {
@@ -40,7 +45,7 @@ namespace MyFirstSoftPhone_03
 
                 softPhone.IncomingCall += new EventHandler<VoIPEventArgs<IPhoneCall>>(softPhone_inComingCall);
 
-                SIPAccount sa = new SIPAccount(true, "1000", "1000", "1000", "1000", "192.168.115.103", 5060);
+                SIPAccount sa = new SIPAccount(true, username, username, username, pass, "192.168.115.103", 5060);
                 InvokeGUIThread(() => { lb_Log.Items.Add("SIP account created!"); });
 
                 phoneLine = softPhone.CreatePhoneLine(sa);
@@ -121,7 +126,6 @@ namespace MyFirstSoftPhone_03
                 connector.Disconnect(mediaReceiver, speaker);
             }
         }
-
 
         private void InvokeGUIThread(Action action)
         {
@@ -223,7 +227,7 @@ namespace MyFirstSoftPhone_03
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            InitializeSoftPhone();
+            InitializeSoftPhone(this.username, this.pass);
         }
 
 
