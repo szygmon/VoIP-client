@@ -1,0 +1,10 @@
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.csprojResolveAssemblyReference.cache
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.Properties.Resources.resources
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.csproj.GenerateResource.Cache
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\bin\Debug\MyFirstSoftPhone_03.exe
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\bin\Debug\MyFirstSoftPhone_03.pdb
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\bin\Debug\VoIPSDK.dll
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\bin\Debug\VoIPSDK.xml
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.exe
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.pdb
+C:\Users\Szymon\Desktop\SIP\MyFirstSoftPhone_03\MyFirstSoftPhone_03\obj\Debug\MyFirstSoftPhone_03.MainForm.resources
