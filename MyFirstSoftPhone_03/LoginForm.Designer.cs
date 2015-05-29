@@ -49,6 +49,7 @@
             this.tb_pass.Name = "tb_pass";
             this.tb_pass.Size = new System.Drawing.Size(164, 22);
             this.tb_pass.TabIndex = 1;
+            this.tb_pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_pass_KeyPress);
             // 
             // btn_login
             // 
@@ -58,6 +59,7 @@
             this.btn_login.TabIndex = 2;
             this.btn_login.Text = "Zaloguj";
             this.btn_login.UseVisualStyleBackColor = true;
+            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
             // btn_register
             // 
@@ -71,7 +73,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 78);
+            this.label1.Location = new System.Drawing.Point(73, 83);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 17);
             this.label1.TabIndex = 4;
@@ -80,7 +82,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(83, 137);
+            this.label2.Location = new System.Drawing.Point(116, 135);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 17);
             this.label2.TabIndex = 5;

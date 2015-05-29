@@ -45,7 +45,7 @@ namespace MyFirstSoftPhone_03
 
                 softPhone.IncomingCall += new EventHandler<VoIPEventArgs<IPhoneCall>>(softPhone_inComingCall);
 
-                SIPAccount sa = new SIPAccount(true, username, username, username, pass, "192.168.115.103", 5060);
+                SIPAccount sa = new SIPAccount(true, username, username, username, pass, "192.168.1.104", 5060);
                 InvokeGUIThread(() => { lb_Log.Items.Add("SIP account created!"); });
 
                 phoneLine = softPhone.CreatePhoneLine(sa);
@@ -135,9 +135,13 @@ namespace MyFirstSoftPhone_03
 
         private void softPhone_inComingCall(object sender, VoIPEventArgs<IPhoneCall> e)
         {
-            InvokeGUIThread(() => { lb_Log.Items.Add("Incoming call from: " + e.Item.DialInfo.ToString()); tb_Display.Text = "Ringing (" + e.Item.DialInfo.Dialed + ")"; });
-
-            reDialNumber = e.Item.DialInfo.Dialed;
+            InvokeGUIThread(() => { 
+                lb_Log.Items.Add("Incoming call from: " + e.Item.DialInfo.ToString()); 
+                tb_Display.Text = "Ringing (" + e.Item.DialInfo.Dialed + ")";
+                btn_PickUp.Text = "Odbierz";
+                
+            });
+            
             call = e.Item;
             WireUpCallEvents();
             inComingCall = true;
@@ -158,6 +162,8 @@ namespace MyFirstSoftPhone_03
                     else
                     {
                         lb_Log.Items.Add("Not registered - Offline: " + phoneLineInformation.ToString());
+                        if (phoneLineInformation.ToString() == "Error")
+                            this.Close();
                     }
 
                 });
@@ -166,7 +172,10 @@ namespace MyFirstSoftPhone_03
 
         private void call_CallStateChanged(object sender, CallStateChangedArgs e)
         {
-            InvokeGUIThread(() => { lb_Log.Items.Add("Callstate changed." + e.State.ToString()); tb_Display.Text = e.State.ToString(); });
+            InvokeGUIThread(() => { 
+                lb_Log.Items.Add("Callstate changed." + e.State.ToString()); 
+                tb_Display.Text = e.State.ToString();
+            });
 
             if (e.State == CallState.Answered)
             {
@@ -179,7 +188,10 @@ namespace MyFirstSoftPhone_03
                 mediaSender.AttachToCall(call);
 
 
-                InvokeGUIThread(() => { lb_Log.Items.Add("Call started."); });
+                InvokeGUIThread(() => { 
+                    lb_Log.Items.Add("Call started.");
+                });
+                
             }
 
             if (e.State == CallState.InCall)
@@ -202,7 +214,12 @@ namespace MyFirstSoftPhone_03
 
                 call = null;
 
-                InvokeGUIThread(() => { lb_Log.Items.Add("Call ended."); tb_Display.Text = string.Empty; });
+                InvokeGUIThread(() => { 
+                    lb_Log.Items.Add("Call ended."); 
+                    tb_Display.Text = string.Empty;
+                    btn_PickUp.Text = "Zadzwoń";
+                });
+                
                 
             }
 
@@ -231,7 +248,7 @@ namespace MyFirstSoftPhone_03
         }
 
 
-        private void buttonKeyPadButton_Click(object sender, EventArgs e)
+       /* private void buttonKeyPadButton_Click(object sender, EventArgs e)
         {
             var btn = sender as Button;
 
@@ -240,7 +257,7 @@ namespace MyFirstSoftPhone_03
             if (btn == null) return;
 
             tb_Display.Text += btn.Text.Trim();
-        }
+        }*/
 
 
         private void btn_PickUp_Click(object sender, EventArgs e)
@@ -338,6 +355,35 @@ namespace MyFirstSoftPhone_03
 
             call.BlindTransfer(transferTo);
             lb_Log.Items.Add("Transfering to:" + transferTo);
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+
+        private void btn_logout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void tb_Display_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_Display_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                btn_PickUp_Click(sender, e);
+            }
         }
     }
 }
