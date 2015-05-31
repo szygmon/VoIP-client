@@ -30,12 +30,15 @@ namespace MyFirstSoftPhone_03
         private string pass;
         private string server;
 
-        public MainForm(string server, string username, string pass)
+        private LoginForm lf;
+
+        public MainForm(string server, string username, string pass, LoginForm lf)
         {
             InitializeComponent();
             this.username = username;
             this.pass = pass;
             this.server = server;
+            this.lf = lf;
         }
 
 
@@ -43,8 +46,15 @@ namespace MyFirstSoftPhone_03
         {
             try
             {
+                // lista
+                string[] lines = System.IO.File.ReadAllLines(@"myFriends.txt");
+                foreach (var item in lines)
+                {
+                    lbx_friends.Items.Add(item);
+                }
+
                 softPhone = SoftPhoneFactory.CreateSoftPhone(SoftPhoneFactory.GetLocalIP(), 5700, 5750);
-                InvokeGUIThread(() => { lb_Log.Items.Add("Softphone created!"); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Softphone created!"); });
 
                 softPhone.IncomingCall += new EventHandler<VoIPEventArgs<IPhoneCall>>(softPhone_inComingCall);
 
@@ -63,18 +73,18 @@ namespace MyFirstSoftPhone_03
                 reDialNumber = string.Empty;
                 localHeld = false;
 
-                // lista
-                string[] lines = System.IO.File.ReadAllLines(@"myFriends.txt");
-                foreach (var item in lines)
-                {
-                    lbx_friends.Items.Add(item);   
-                }
-
                 ConnectMedia();
             }
             catch (Exception ex)
             {
-                InvokeGUIThread(() => { lb_Log.Items.Add("Local IP error!"); });
+                this.Hide();
+                this.lf.setInfo("Błędne dane logowania!");
+                this.lf.Show();
+                /*InvokeGUIThread(() => { 
+                    lb_Log.Items.Add("Local IP error!");
+                    tb_Display.Text = "Błędne dane logowania - uruchom ponownie program";
+                    
+                });*/
             }
         }
 
@@ -173,7 +183,13 @@ namespace MyFirstSoftPhone_03
                     {
                         lb_Log.Items.Add("Not registered - Offline: " + phoneLineInformation.ToString());
                         if (phoneLineInformation.ToString() == "Error")
-                            this.Close();
+                        {
+                            this.Hide();
+                            this.lf.setInfo("Błędne dane!");
+                            this.lf.Show();
+                        }
+                            
+                            
                     }
 
                 });
@@ -270,7 +286,9 @@ namespace MyFirstSoftPhone_03
 
             if (phoneLineInformation != RegState.RegistrationSucceeded)
             {
-                InvokeGUIThread(() => { lb_Log.Items.Add("Registratin Failed!"); tb_Display.Text = "OFFLINE";});
+                InvokeGUIThread(() => { 
+                    lb_Log.Items.Add("Registratin Failed!"); 
+                    tb_Display.Text = "Jesteś OFFLINE";});
                 return;
             }
 
@@ -305,25 +323,17 @@ namespace MyFirstSoftPhone_03
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            List<string> lines = new List<string>();
-            foreach (var item in lbx_friends.Items)
-            {
-                lines.Add(item.ToString());
-            }
-            int ile = lines.Count;
-            string[] text = new string[ile];
-            for (int i = 0; i < ile; i++)
-            {
-                text[i] = lines[i];
-            }
-            System.IO.File.WriteAllLines(@"myFriends.txt", text);
+            saveFriendsList();
             Application.Exit();
         }
 
 
         private void btn_logout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            //this.Close();
+            saveFriendsList();
+            lf.Show();
+            this.Hide();
         }
 
         private void tb_Display_TextChanged(object sender, EventArgs e)
@@ -351,14 +361,42 @@ namespace MyFirstSoftPhone_03
 
         private void lbx_friends_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Get the currently selected item in the ListBox.
-            string curItem = lbx_friends.SelectedItem.ToString();
+            if (lbx_friends.SelectedItems.Count != 0)
+            {
+                string curItem = lbx_friends.SelectedItem.ToString();
+                tb_Display.Text = curItem;
+            }
+        }
 
-            // Find the string in ListBox2.
-            //int index = listBox2.FindString(curItem);
-            // If the item was not found in ListBox 2 display a message box, otherwise select it in ListBox2.
+        private void btn_addFriend_Click(object sender, EventArgs e)
+        {
+            int index = lbx_friends.FindString(tb_Display.Text);
+            if (index == -1)
+                lbx_friends.Items.Add(tb_Display.Text);   
+        }
 
-            tb_Display.Text = curItem;
+        private void btn_remFriend_Click(object sender, EventArgs e)
+        {
+            while (lbx_friends.SelectedItems.Count != 0)
+            {
+                lbx_friends.Items.Remove(lbx_friends.SelectedItems[0]);
+            }
+            //lbx_friends.Refresh();
+        }
+        private void saveFriendsList()
+        {
+            List<string> lines = new List<string>();
+            foreach (var item in lbx_friends.Items)
+            {
+                lines.Add(item.ToString());
+            }
+            int ile = lines.Count;
+            string[] text = new string[ile];
+            for (int i = 0; i < ile; i++)
+            {
+                text[i] = lines[i];
+            }
+            System.IO.File.WriteAllLines(@"myFriends.txt", text);
         }
     }
 }

@@ -38,6 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbx_friends = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btn_addFriend = new System.Windows.Forms.Button();
+            this.btn_remFriend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lb_Log
@@ -78,9 +80,9 @@
             this.lbl_NumberToDial.Location = new System.Drawing.Point(592, 9);
             this.lbl_NumberToDial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_NumberToDial.Name = "lbl_NumberToDial";
-            this.lbl_NumberToDial.Size = new System.Drawing.Size(46, 17);
+            this.lbl_NumberToDial.Size = new System.Drawing.Size(101, 17);
             this.lbl_NumberToDial.TabIndex = 16;
-            this.lbl_NumberToDial.Text = "label1";
+            this.lbl_NumberToDial.Text = "niezalogowany";
             // 
             // tb_Display
             // 
@@ -142,11 +144,35 @@
             this.label3.TabIndex = 25;
             this.label3.Text = "Lista znajomych:";
             // 
+            // btn_addFriend
+            // 
+            this.btn_addFriend.Location = new System.Drawing.Point(630, 105);
+            this.btn_addFriend.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_addFriend.Name = "btn_addFriend";
+            this.btn_addFriend.Size = new System.Drawing.Size(99, 28);
+            this.btn_addFriend.TabIndex = 26;
+            this.btn_addFriend.Text = "+ znajomy";
+            this.btn_addFriend.UseVisualStyleBackColor = true;
+            this.btn_addFriend.Click += new System.EventHandler(this.btn_addFriend_Click);
+            // 
+            // btn_remFriend
+            // 
+            this.btn_remFriend.Location = new System.Drawing.Point(737, 105);
+            this.btn_remFriend.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_remFriend.Name = "btn_remFriend";
+            this.btn_remFriend.Size = new System.Drawing.Size(99, 28);
+            this.btn_remFriend.TabIndex = 27;
+            this.btn_remFriend.Text = "- znajomy";
+            this.btn_remFriend.UseVisualStyleBackColor = true;
+            this.btn_remFriend.Click += new System.EventHandler(this.btn_remFriend_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 779);
+            this.Controls.Add(this.btn_remFriend);
+            this.Controls.Add(this.btn_addFriend);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbx_friends);
             this.Controls.Add(this.label2);
@@ -179,6 +205,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lbx_friends;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_addFriend;
+        private System.Windows.Forms.Button btn_remFriend;
     }
 }
 
