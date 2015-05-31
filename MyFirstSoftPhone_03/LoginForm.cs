@@ -13,7 +13,7 @@ namespace MyFirstSoftPhone_03
     {
         public string username;
         public string pass;
-        //private MainForm mf = null;
+        public string server;
         public LoginForm()
         {
             InitializeComponent();
@@ -23,9 +23,8 @@ namespace MyFirstSoftPhone_03
         {
             this.username = tb_username.Text;
             this.pass = tb_pass.Text;
+            this.server = tb_server.Text;
             this.Close();
-            //Application.Run(new MainForm(this, tb_username.Text, tb_pass.Text));
-            //this.Hide();
         }
 
         private void tb_pass_KeyPress(object sender, KeyPressEventArgs e)
@@ -34,6 +33,11 @@ namespace MyFirstSoftPhone_03
             {
                 btn_login_Click(sender, e);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

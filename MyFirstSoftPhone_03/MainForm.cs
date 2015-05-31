@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Ozeki.Media.MediaHandlers;
 using Ozeki.VoIP;
 using Ozeki.VoIP.SDK;
+using System.Collections.Generic;
 
 namespace MyFirstSoftPhone_03
 {
@@ -27,16 +28,18 @@ namespace MyFirstSoftPhone_03
 
         private string username;
         private string pass;
+        private string server;
 
-        public MainForm(string username, string pass)
+        public MainForm(string server, string username, string pass)
         {
             InitializeComponent();
             this.username = username;
             this.pass = pass;
+            this.server = server;
         }
 
 
-        private void InitializeSoftPhone(string username, string pass)
+        private void InitializeSoftPhone()
         {
             try
             {
@@ -45,7 +48,7 @@ namespace MyFirstSoftPhone_03
 
                 softPhone.IncomingCall += new EventHandler<VoIPEventArgs<IPhoneCall>>(softPhone_inComingCall);
 
-                SIPAccount sa = new SIPAccount(true, username, username, username, pass, "192.168.1.104", 5060);
+                SIPAccount sa = new SIPAccount(true, username, username, username, pass, server, 5060);
                 InvokeGUIThread(() => { lb_Log.Items.Add("SIP account created!"); });
 
                 phoneLine = softPhone.CreatePhoneLine(sa);
@@ -59,6 +62,13 @@ namespace MyFirstSoftPhone_03
                 inComingCall = false;
                 reDialNumber = string.Empty;
                 localHeld = false;
+
+                // lista
+                string[] lines = System.IO.File.ReadAllLines(@"myFriends.txt");
+                foreach (var item in lines)
+                {
+                    lbx_friends.Items.Add(item);   
+                }
 
                 ConnectMedia();
             }
@@ -179,9 +189,6 @@ namespace MyFirstSoftPhone_03
 
             if (e.State == CallState.Answered)
             {
-                btn_Hold.Enabled = true;
-                btn_Hold.Text = "Hold";
-
                 StartDevices();
 
                 mediaReceiver.AttachToCall(call);
@@ -196,8 +203,6 @@ namespace MyFirstSoftPhone_03
 
             if (e.State == CallState.InCall)
             {
-                btn_Hold.Enabled = true;
-                btn_Hold.Text = "Hold";
                 StartDevices();
             }
 
@@ -244,21 +249,8 @@ namespace MyFirstSoftPhone_03
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            InitializeSoftPhone(this.username, this.pass);
+            InitializeSoftPhone();
         }
-
-
-       /* private void buttonKeyPadButton_Click(object sender, EventArgs e)
-        {
-            var btn = sender as Button;
-
-            if (call != null) { return; }
-
-            if (btn == null) return;
-
-            tb_Display.Text += btn.Text.Trim();
-        }*/
-
 
         private void btn_PickUp_Click(object sender, EventArgs e)
         {
@@ -311,54 +303,20 @@ namespace MyFirstSoftPhone_03
             tb_Display.Text = string.Empty;
         }
 
-        private void btn_Redial_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(reDialNumber))
-                return;
-
-            if (call != null)
-                return;
-
-            call = softPhone.CreateCallObject(phoneLine, reDialNumber);
-            WireUpCallEvents();
-            call.Start();
-        }
-
-        private void btn_Hold_Click(object sender, EventArgs e)
-        {
-            if (call == null)
-                return;
-
-            if (!localHeld)
-            {
-                call.Hold();
-                btn_Hold.Text = "Unhold";
-                localHeld = true;
-            }
-            else
-            {
-                btn_Hold.Text = "Hold";
-                localHeld = false;
-                call.Unhold();
-            }
-        }
-
-        private void btn_Transfer_Click(object sender, EventArgs e)
-        {
-            string transferTo = "1001";
-
-            if (call == null)
-                return;
-
-            if (string.IsNullOrEmpty(transferTo))
-                return;
-
-            call.BlindTransfer(transferTo);
-            lb_Log.Items.Add("Transfering to:" + transferTo);
-        }
-
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            List<string> lines = new List<string>();
+            foreach (var item in lbx_friends.Items)
+            {
+                lines.Add(item.ToString());
+            }
+            int ile = lines.Count;
+            string[] text = new string[ile];
+            for (int i = 0; i < ile; i++)
+            {
+                text[i] = lines[i];
+            }
+            System.IO.File.WriteAllLines(@"myFriends.txt", text);
             Application.Exit();
         }
 
@@ -384,6 +342,23 @@ namespace MyFirstSoftPhone_03
             {
                 btn_PickUp_Click(sender, e);
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbx_friends_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the currently selected item in the ListBox.
+            string curItem = lbx_friends.SelectedItem.ToString();
+
+            // Find the string in ListBox2.
+            //int index = listBox2.FindString(curItem);
+            // If the item was not found in ListBox 2 display a message box, otherwise select it in ListBox2.
+
+            tb_Display.Text = curItem;
         }
     }
 }

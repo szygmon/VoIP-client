@@ -34,6 +34,8 @@
             this.btn_register = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.tb_server = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tb_username
@@ -41,14 +43,14 @@
             this.tb_username.Location = new System.Drawing.Point(61, 103);
             this.tb_username.Name = "tb_username";
             this.tb_username.Size = new System.Drawing.Size(163, 22);
-            this.tb_username.TabIndex = 0;
+            this.tb_username.TabIndex = 1;
             // 
             // tb_pass
             // 
             this.tb_pass.Location = new System.Drawing.Point(61, 155);
             this.tb_pass.Name = "tb_pass";
             this.tb_pass.Size = new System.Drawing.Size(164, 22);
-            this.tb_pass.TabIndex = 1;
+            this.tb_pass.TabIndex = 2;
             this.tb_pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_pass_KeyPress);
             // 
             // btn_login
@@ -56,7 +58,7 @@
             this.btn_login.Location = new System.Drawing.Point(61, 199);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(67, 29);
-            this.btn_login.TabIndex = 2;
+            this.btn_login.TabIndex = 3;
             this.btn_login.Text = "Zaloguj";
             this.btn_login.UseVisualStyleBackColor = true;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
@@ -88,11 +90,30 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Hasło:";
             // 
+            // tb_server
+            // 
+            this.tb_server.Location = new System.Drawing.Point(61, 45);
+            this.tb_server.Name = "tb_server";
+            this.tb_server.Size = new System.Drawing.Size(163, 22);
+            this.tb_server.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(84, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 17);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "IP serwera VoIP:";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(282, 448);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.tb_server);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_register);
@@ -114,5 +135,7 @@
         private System.Windows.Forms.Button btn_register;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tb_server;
+        private System.Windows.Forms.Label label3;
     }
 }
