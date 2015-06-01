@@ -1,4 +1,4 @@
-﻿namespace MyFirstSoftPhone_03
+﻿namespace VoIPclient
 {
     partial class LoginForm
     {

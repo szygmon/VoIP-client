@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 
-namespace MyFirstSoftPhone_03
+namespace VoIPclient
 {
     public partial class LoginForm : Form
     {

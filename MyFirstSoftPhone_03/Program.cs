@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MyFirstSoftPhone_03
+namespace VoIPclient
 {
     static class Program
     {

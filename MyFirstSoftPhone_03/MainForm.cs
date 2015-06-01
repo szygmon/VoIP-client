@@ -5,7 +5,7 @@ using Ozeki.VoIP;
 using Ozeki.VoIP.SDK;
 using System.Collections.Generic;
 
-namespace MyFirstSoftPhone_03
+namespace VoIPclient
 {
     public partial class MainForm : Form
     {
