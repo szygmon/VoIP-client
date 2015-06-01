@@ -46,15 +46,15 @@
             // 
             this.lb_Log.FormattingEnabled = true;
             this.lb_Log.ItemHeight = 16;
-            this.lb_Log.Location = new System.Drawing.Point(17, 16);
+            this.lb_Log.Location = new System.Drawing.Point(12, 395);
             this.lb_Log.Margin = new System.Windows.Forms.Padding(4);
             this.lb_Log.Name = "lb_Log";
-            this.lb_Log.Size = new System.Drawing.Size(427, 740);
+            this.lb_Log.Size = new System.Drawing.Size(427, 84);
             this.lb_Log.TabIndex = 0;
             // 
             // btn_HangUp
             // 
-            this.btn_HangUp.Location = new System.Drawing.Point(844, 105);
+            this.btn_HangUp.Location = new System.Drawing.Point(340, 110);
             this.btn_HangUp.Margin = new System.Windows.Forms.Padding(4);
             this.btn_HangUp.Name = "btn_HangUp";
             this.btn_HangUp.Size = new System.Drawing.Size(100, 28);
@@ -65,7 +65,7 @@
             // 
             // btn_PickUp
             // 
-            this.btn_PickUp.Location = new System.Drawing.Point(516, 105);
+            this.btn_PickUp.Location = new System.Drawing.Point(12, 110);
             this.btn_PickUp.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PickUp.Name = "btn_PickUp";
             this.btn_PickUp.Size = new System.Drawing.Size(100, 28);
@@ -77,7 +77,7 @@
             // lbl_NumberToDial
             // 
             this.lbl_NumberToDial.AutoSize = true;
-            this.lbl_NumberToDial.Location = new System.Drawing.Point(592, 9);
+            this.lbl_NumberToDial.Location = new System.Drawing.Point(97, 14);
             this.lbl_NumberToDial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_NumberToDial.Name = "lbl_NumberToDial";
             this.lbl_NumberToDial.Size = new System.Drawing.Size(101, 17);
@@ -86,7 +86,7 @@
             // 
             // tb_Display
             // 
-            this.tb_Display.Location = new System.Drawing.Point(516, 65);
+            this.tb_Display.Location = new System.Drawing.Point(12, 70);
             this.tb_Display.Margin = new System.Windows.Forms.Padding(4);
             this.tb_Display.Name = "tb_Display";
             this.tb_Display.Size = new System.Drawing.Size(427, 22);
@@ -96,7 +96,7 @@
             // 
             // btn_logout
             // 
-            this.btn_logout.Location = new System.Drawing.Point(868, 16);
+            this.btn_logout.Location = new System.Drawing.Point(364, 21);
             this.btn_logout.Name = "btn_logout";
             this.btn_logout.Size = new System.Drawing.Size(75, 28);
             this.btn_logout.TabIndex = 21;
@@ -107,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(516, 44);
+            this.label1.Location = new System.Drawing.Point(12, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 17);
             this.label1.TabIndex = 22;
@@ -117,7 +117,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(513, 9);
+            this.label2.Location = new System.Drawing.Point(12, 14);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 17);
@@ -129,7 +129,7 @@
             // 
             this.lbx_friends.FormattingEnabled = true;
             this.lbx_friends.ItemHeight = 16;
-            this.lbx_friends.Location = new System.Drawing.Point(516, 198);
+            this.lbx_friends.Location = new System.Drawing.Point(12, 203);
             this.lbx_friends.Name = "lbx_friends";
             this.lbx_friends.Size = new System.Drawing.Size(427, 164);
             this.lbx_friends.TabIndex = 24;
@@ -138,7 +138,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(516, 178);
+            this.label3.Location = new System.Drawing.Point(12, 183);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 17);
             this.label3.TabIndex = 25;
@@ -146,7 +146,7 @@
             // 
             // btn_addFriend
             // 
-            this.btn_addFriend.Location = new System.Drawing.Point(630, 105);
+            this.btn_addFriend.Location = new System.Drawing.Point(126, 110);
             this.btn_addFriend.Margin = new System.Windows.Forms.Padding(4);
             this.btn_addFriend.Name = "btn_addFriend";
             this.btn_addFriend.Size = new System.Drawing.Size(99, 28);
@@ -157,7 +157,7 @@
             // 
             // btn_remFriend
             // 
-            this.btn_remFriend.Location = new System.Drawing.Point(737, 105);
+            this.btn_remFriend.Location = new System.Drawing.Point(233, 110);
             this.btn_remFriend.Margin = new System.Windows.Forms.Padding(4);
             this.btn_remFriend.Name = "btn_remFriend";
             this.btn_remFriend.Size = new System.Drawing.Size(99, 28);
@@ -170,7 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(972, 779);
+            this.ClientSize = new System.Drawing.Size(454, 515);
             this.Controls.Add(this.btn_remFriend);
             this.Controls.Add(this.btn_addFriend);
             this.Controls.Add(this.label3);

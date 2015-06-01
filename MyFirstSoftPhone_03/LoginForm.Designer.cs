@@ -99,7 +99,7 @@
             this.tb_server.Name = "tb_server";
             this.tb_server.Size = new System.Drawing.Size(163, 22);
             this.tb_server.TabIndex = 0;
-            this.tb_server.Text = "192.168.1.130";
+            this.tb_server.Text = "192.168.0.64";
             // 
             // label3
             // 

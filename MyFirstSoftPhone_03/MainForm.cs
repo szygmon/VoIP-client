@@ -30,6 +30,8 @@ namespace MyFirstSoftPhone_03
         private string pass;
         private string server;
 
+        System.Media.SoundPlayer player;
+
         private LoginForm lf;
 
         public MainForm(string server, string username, string pass, LoginForm lf)
@@ -39,6 +41,7 @@ namespace MyFirstSoftPhone_03
             this.pass = pass;
             this.server = server;
             this.lf = lf;
+            player =  new System.Media.SoundPlayer(@"dzwonek.wav");
         }
 
 
@@ -155,11 +158,11 @@ namespace MyFirstSoftPhone_03
 
         private void softPhone_inComingCall(object sender, VoIPEventArgs<IPhoneCall> e)
         {
-            InvokeGUIThread(() => { 
-                lb_Log.Items.Add("Incoming call from: " + e.Item.DialInfo.ToString()); 
-                tb_Display.Text = "Ringing (" + e.Item.DialInfo.Dialed + ")";
+            InvokeGUIThread(() => {
+                tb_Display.Text = "Dzwoni " + e.Item.DialInfo.CallerDisplay.ToString();
                 btn_PickUp.Text = "Odbierz";
-                
+                player.PlayLooping();
+                lb_Log.Items.Add(e.Item.DialInfo.SIPCallerID.ToString());
             });
             
             call = e.Item;
@@ -200,7 +203,7 @@ namespace MyFirstSoftPhone_03
         {
             InvokeGUIThread(() => { 
                 lb_Log.Items.Add("Callstate changed." + e.State.ToString()); 
-                tb_Display.Text = e.State.ToString();
+                //tb_Display.Text = e.State.ToString();
             });
 
             if (e.State == CallState.Answered)
@@ -213,6 +216,8 @@ namespace MyFirstSoftPhone_03
 
                 InvokeGUIThread(() => { 
                     lb_Log.Items.Add("Call started.");
+                    tb_Display.Text = "W trakcie połączenia...";
+                    player.Stop();
                 });
                 
             }
@@ -237,7 +242,7 @@ namespace MyFirstSoftPhone_03
 
                 InvokeGUIThread(() => { 
                     lb_Log.Items.Add("Call ended."); 
-                    tb_Display.Text = string.Empty;
+                    tb_Display.Text = "Połączenie zakończone";
                     btn_PickUp.Text = "Zadzwoń";
                 });
                 
@@ -275,7 +280,9 @@ namespace MyFirstSoftPhone_03
                 inComingCall = false;
                 call.Answer();
 
-                InvokeGUIThread(() => { lb_Log.Items.Add("Call accepted."); });
+                InvokeGUIThread(() => { 
+                    lb_Log.Items.Add("Call accepted."); 
+                });
                 return;
             }
 
@@ -305,13 +312,19 @@ namespace MyFirstSoftPhone_03
                 if (inComingCall && call.CallState == CallState.Ringing)
                 {
                     call.Reject();
-                    InvokeGUIThread(() => { lb_Log.Items.Add("Call rejected."); });
+                    InvokeGUIThread(() => { 
+                        lb_Log.Items.Add("Call rejected.");
+                        player.Stop();
+                    });
                 }
                 else
                 {
                     call.HangUp();
                     inComingCall = false;
-                    InvokeGUIThread(() => { lb_Log.Items.Add("Call hanged up."); });
+                    InvokeGUIThread(() => { 
+                        lb_Log.Items.Add("Call hanged up.");
+                        player.Stop();
+                    });
                 }
 
                 call = null;

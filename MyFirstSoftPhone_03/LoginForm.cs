@@ -29,16 +29,23 @@ namespace MyFirstSoftPhone_03
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            var password = System.Text.Encoding.UTF8.GetBytes(tb_pass.Text);
-            var saltedHash = hmacMD5.ComputeHash(password);
+            if (!String.IsNullOrEmpty(tb_username.Text) && !String.IsNullOrEmpty(tb_pass.Text) && !String.IsNullOrEmpty(tb_server.Text))
+            {
+                var password = System.Text.Encoding.UTF8.GetBytes(tb_pass.Text);
+                var saltedHash = hmacMD5.ComputeHash(password);
 
-            this.username = tb_username.Text;
-            this.pass = System.Text.Encoding.UTF8.GetString(saltedHash);
-            this.server = tb_server.Text;
-            //this.Close();
-            this.Hide();
-            MainForm mf = new MainForm(server, username, pass, this);
-            mf.Show();
+                this.username = tb_username.Text;
+                this.pass = System.Text.Encoding.UTF8.GetString(saltedHash);
+                this.server = tb_server.Text;
+                //this.Close();
+                this.Hide();
+                MainForm mf = new MainForm(server, username, pass, this);
+                mf.Show();
+            }
+            else
+            {
+                setInfo("Uzupełnij wszystkie pola!");
+            }
         }
 
         private void tb_pass_KeyPress(object sender, KeyPressEventArgs e)
