@@ -256,7 +256,8 @@ namespace VoIPclient
                     btn_PickUp.Text = "Zadzwoń";
                 });
 
-
+                player.Stop();
+                inComingCall = false;
             }
 
             if (e.State == CallState.LocalHeld)
