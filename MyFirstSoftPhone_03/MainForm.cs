@@ -21,17 +21,13 @@ namespace VoIPclient
         PhoneCallAudioReceiver mediaReceiver = new PhoneCallAudioReceiver();
 
         private bool inComingCall;
-
         private string reDialNumber;
-
         private bool localHeld;
-
         private string username;
         private string pass;
         private string server;
 
         System.Media.SoundPlayer player;
-
         private LoginForm lf;
 
         public MainForm(string server, string username, string pass, LoginForm lf)
@@ -41,21 +37,13 @@ namespace VoIPclient
             this.pass = pass;
             this.server = server;
             this.lf = lf;
-            player =  new System.Media.SoundPlayer(@"dzwonek.wav");
+            player = new System.Media.SoundPlayer(@"dzwonek.wav");
         }
-
 
         private void InitializeSoftPhone()
         {
             try
             {
-                // lista
-                string[] lines = System.IO.File.ReadAllLines(@"myFriends.txt");
-                foreach (var item in lines)
-                {
-                    lbx_friends.Items.Add(item);
-                }
-
                 softPhone = SoftPhoneFactory.CreateSoftPhone(SoftPhoneFactory.GetLocalIP(), 5700, 5750);
                 //InvokeGUIThread(() => { lb_Log.Items.Add("Softphone created!"); });
 
@@ -71,12 +59,40 @@ namespace VoIPclient
 
                 tb_Display.Text = string.Empty;
                 lbl_NumberToDial.Text = sa.RegisterName;
-                
+
                 inComingCall = false;
                 reDialNumber = string.Empty;
                 localHeld = false;
 
                 ConnectMedia();
+
+                /** lista znajomych **/
+                System.Net.Sockets.TcpClient tcpclnt = new System.Net.Sockets.TcpClient();
+                tcpclnt.Connect(server, 8888);
+
+                System.Net.Sockets.NetworkStream nts = tcpclnt.GetStream();
+                System.IO.StreamReader strread = new System.IO.StreamReader(nts);
+                System.IO.StreamWriter strwrite = new System.IO.StreamWriter(nts);
+
+                strwrite.WriteLine(username + "@");
+                strwrite.Flush();
+
+                string output;
+                while (true)
+                {
+                    output = strread.ReadLine();
+                    if (output != null)
+                        lbx_friends.Items.Add(output);
+                    else
+                    {
+                        strwrite.Close();
+                        strread.Close();
+                        nts.Close();
+                        tcpclnt.Close();
+                        break;
+                    }
+                }
+                /** koniec listy **/
             }
             catch (Exception ex)
             {
@@ -90,7 +106,6 @@ namespace VoIPclient
                 });*/
             }
         }
-
 
         private void StartDevices()
         {
@@ -122,7 +137,6 @@ namespace VoIPclient
                 InvokeGUIThread(() => { lb_Log.Items.Add("Speaker Stopped."); });
             }
         }
-
 
         private void ConnectMedia()
         {
@@ -158,19 +172,18 @@ namespace VoIPclient
 
         private void softPhone_inComingCall(object sender, VoIPEventArgs<IPhoneCall> e)
         {
-            InvokeGUIThread(() => {
+            InvokeGUIThread(() =>
+            {
                 tb_Display.Text = "Dzwoni " + e.Item.DialInfo.CallerDisplay.ToString();
                 btn_PickUp.Text = "Odbierz";
                 player.PlayLooping();
                 lb_Log.Items.Add(e.Item.DialInfo.SIPCallerID.ToString());
             });
-            
+
             call = e.Item;
             WireUpCallEvents();
             inComingCall = true;
         }
-
-
 
         private void phoneLine_PhoneLineInformation(object sender, RegistrationStateChangedArgs e)
         {
@@ -191,19 +204,16 @@ namespace VoIPclient
                             this.lf.setInfo("Błędne dane!");
                             this.lf.Show();
                         }
-                            
-                            
                     }
-
                 });
         }
 
 
         private void call_CallStateChanged(object sender, CallStateChangedArgs e)
         {
-            InvokeGUIThread(() => { 
-                lb_Log.Items.Add("Callstate changed." + e.State.ToString()); 
-                //tb_Display.Text = e.State.ToString();
+            InvokeGUIThread(() =>
+            {
+                lb_Log.Items.Add("Callstate changed." + e.State.ToString());
             });
 
             if (e.State == CallState.Answered)
@@ -213,13 +223,13 @@ namespace VoIPclient
                 mediaReceiver.AttachToCall(call);
                 mediaSender.AttachToCall(call);
 
-
-                InvokeGUIThread(() => { 
+                InvokeGUIThread(() =>
+                {
                     lb_Log.Items.Add("Call started.");
                     tb_Display.Text = "W trakcie połączenia...";
                     player.Stop();
                 });
-                
+
             }
 
             if (e.State == CallState.InCall)
@@ -240,22 +250,21 @@ namespace VoIPclient
 
                 call = null;
 
-                InvokeGUIThread(() => { 
-                    lb_Log.Items.Add("Call ended."); 
+                InvokeGUIThread(() =>
+                {
+                    lb_Log.Items.Add("Call ended.");
                     tb_Display.Text = "Połączenie zakończone";
                     btn_PickUp.Text = "Zadzwoń";
                 });
-                
-                
+
+
             }
 
             if (e.State == CallState.LocalHeld)
             {
                 StopDevices();
             }
-
         }
-
 
         private void WireUpCallEvents()
         {
@@ -280,8 +289,9 @@ namespace VoIPclient
                 inComingCall = false;
                 call.Answer();
 
-                InvokeGUIThread(() => { 
-                    lb_Log.Items.Add("Call accepted."); 
+                InvokeGUIThread(() =>
+                {
+                    lb_Log.Items.Add("Call accepted.");
                 });
                 return;
             }
@@ -293,16 +303,18 @@ namespace VoIPclient
 
             if (phoneLineInformation != RegState.RegistrationSucceeded)
             {
-                InvokeGUIThread(() => { 
-                    lb_Log.Items.Add("Registratin Failed!"); 
-                    tb_Display.Text = "Jesteś OFFLINE";});
+                InvokeGUIThread(() =>
+                {
+                    lb_Log.Items.Add("Registratin Failed!");
+                    tb_Display.Text = "Jesteś OFFLINE";
+                });
                 return;
             }
 
             reDialNumber = tb_Display.Text;
             call = softPhone.CreateCallObject(phoneLine, tb_Display.Text);
             WireUpCallEvents();
-            call.Start();   
+            call.Start();
         }
 
         private void btn_HangUp_Click(object sender, EventArgs e)
@@ -312,7 +324,8 @@ namespace VoIPclient
                 if (inComingCall && call.CallState == CallState.Ringing)
                 {
                     call.Reject();
-                    InvokeGUIThread(() => { 
+                    InvokeGUIThread(() =>
+                    {
                         lb_Log.Items.Add("Call rejected.");
                         player.Stop();
                     });
@@ -321,7 +334,8 @@ namespace VoIPclient
                 {
                     call.HangUp();
                     inComingCall = false;
-                    InvokeGUIThread(() => { 
+                    InvokeGUIThread(() =>
+                    {
                         lb_Log.Items.Add("Call hanged up.");
                         player.Stop();
                     });
@@ -343,7 +357,6 @@ namespace VoIPclient
 
         private void btn_logout_Click(object sender, EventArgs e)
         {
-            //this.Close();
             saveFriendsList();
             lf.Show();
             this.Hide();
@@ -385,7 +398,7 @@ namespace VoIPclient
         {
             int index = lbx_friends.FindString(tb_Display.Text);
             if (index == -1)
-                lbx_friends.Items.Add(tb_Display.Text);   
+                lbx_friends.Items.Add(tb_Display.Text);
         }
 
         private void btn_remFriend_Click(object sender, EventArgs e)
@@ -394,22 +407,45 @@ namespace VoIPclient
             {
                 lbx_friends.Items.Remove(lbx_friends.SelectedItems[0]);
             }
-            //lbx_friends.Refresh();
         }
         private void saveFriendsList()
         {
-            List<string> lines = new List<string>();
-            foreach (var item in lbx_friends.Items)
+            try
             {
-                lines.Add(item.ToString());
+                System.Net.Sockets.TcpClient tcpclnt = new System.Net.Sockets.TcpClient();
+                tcpclnt.Connect(server, 8888);
+
+                System.Net.Sockets.NetworkStream nts = tcpclnt.GetStream();
+                System.IO.StreamReader strread = new System.IO.StreamReader(nts);
+                System.IO.StreamWriter strwrite = new System.IO.StreamWriter(nts);
+
+                List<string> lines = new List<string>();
+                lines.Add("save@" + username);
+                foreach (var item in lbx_friends.Items)
+                {
+                    lines.Add(item.ToString());
+                }
+                int ile = lines.Count;
+                string[] text = new string[ile];
+                for (int i = 0; i < ile; i++)
+                {
+                    text[i] = lines[i];
+                }
+
+                foreach (var s in text)
+                {
+                    strwrite.WriteLine(s);
+                    strwrite.Flush();
+                }
+                strwrite.Close();
+                strread.Close();
+                nts.Close();
+                tcpclnt.Close();
             }
-            int ile = lines.Count;
-            string[] text = new string[ile];
-            for (int i = 0; i < ile; i++)
+            catch (Exception ee)
             {
-                text[i] = lines[i];
+                Console.WriteLine("Error. " + ee.StackTrace);
             }
-            System.IO.File.WriteAllLines(@"myFriends.txt", text);
         }
     }
 }

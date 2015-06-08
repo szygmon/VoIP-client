@@ -99,7 +99,7 @@
             this.tb_server.Name = "tb_server";
             this.tb_server.Size = new System.Drawing.Size(163, 22);
             this.tb_server.TabIndex = 0;
-            this.tb_server.Text = "192.168.0.64";
+            this.tb_server.Text = "192.168.1.119";
             // 
             // label3
             // 
@@ -139,6 +139,7 @@
             this.Controls.Add(this.tb_username);
             this.Name = "LoginForm";
             this.Text = "VoIP SM - logowanie";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

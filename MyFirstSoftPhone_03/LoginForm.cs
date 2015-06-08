@@ -102,5 +102,10 @@ namespace VoIPclient
             lb_infoLogin.Text = info;
         }
 
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
