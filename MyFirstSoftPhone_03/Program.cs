@@ -13,13 +13,6 @@ namespace VoIPclient
             
             LoginForm lf = new LoginForm();
             Application.Run(lf);
-            
-            //string username = lf.username;
-            //string password = lf.pass;
-            //string server = lf.server;
-
-            //MainForm mf = new MainForm(server, username, password);
-            //Application.Run(mf);
         }
     }
 }

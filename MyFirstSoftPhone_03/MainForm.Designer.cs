@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lb_Log = new System.Windows.Forms.ListBox();
             this.btn_HangUp = new System.Windows.Forms.Button();
             this.btn_PickUp = new System.Windows.Forms.Button();
             this.lbl_NumberToDial = new System.Windows.Forms.Label();
@@ -41,16 +40,6 @@
             this.btn_addFriend = new System.Windows.Forms.Button();
             this.btn_remFriend = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // lb_Log
-            // 
-            this.lb_Log.FormattingEnabled = true;
-            this.lb_Log.ItemHeight = 16;
-            this.lb_Log.Location = new System.Drawing.Point(12, 395);
-            this.lb_Log.Margin = new System.Windows.Forms.Padding(4);
-            this.lb_Log.Name = "lb_Log";
-            this.lb_Log.Size = new System.Drawing.Size(427, 84);
-            this.lb_Log.TabIndex = 0;
             // 
             // btn_HangUp
             // 
@@ -131,7 +120,7 @@
             this.lbx_friends.ItemHeight = 16;
             this.lbx_friends.Location = new System.Drawing.Point(12, 203);
             this.lbx_friends.Name = "lbx_friends";
-            this.lbx_friends.Size = new System.Drawing.Size(427, 164);
+            this.lbx_friends.Size = new System.Drawing.Size(427, 244);
             this.lbx_friends.TabIndex = 24;
             this.lbx_friends.SelectedIndexChanged += new System.EventHandler(this.lbx_friends_SelectedIndexChanged);
             // 
@@ -170,7 +159,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 515);
+            this.ClientSize = new System.Drawing.Size(454, 465);
             this.Controls.Add(this.btn_remFriend);
             this.Controls.Add(this.btn_addFriend);
             this.Controls.Add(this.label3);
@@ -182,7 +171,6 @@
             this.Controls.Add(this.lbl_NumberToDial);
             this.Controls.Add(this.btn_PickUp);
             this.Controls.Add(this.btn_HangUp);
-            this.Controls.Add(this.lb_Log);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "VoIP SM";
@@ -195,7 +183,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lb_Log;
         private System.Windows.Forms.Button btn_HangUp;
         private System.Windows.Forms.Button btn_PickUp;
         private System.Windows.Forms.Label lbl_NumberToDial;

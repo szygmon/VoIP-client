@@ -50,11 +50,11 @@ namespace VoIPclient
                 softPhone.IncomingCall += new EventHandler<VoIPEventArgs<IPhoneCall>>(softPhone_inComingCall);
 
                 SIPAccount sa = new SIPAccount(true, username, username, username, pass, server, 5060);
-                InvokeGUIThread(() => { lb_Log.Items.Add("SIP account created!"); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("SIP account created!"); });
 
                 phoneLine = softPhone.CreatePhoneLine(sa);
                 phoneLine.RegistrationStateChanged += phoneLine_PhoneLineInformation;
-                InvokeGUIThread(() => { lb_Log.Items.Add("Phoneline created."); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Phoneline created."); });
                 softPhone.RegisterPhoneLine(phoneLine);
 
                 tb_Display.Text = string.Empty;
@@ -84,13 +84,13 @@ namespace VoIPclient
             if (microphone != null)
             {
                 microphone.Start();
-                InvokeGUIThread(() => { lb_Log.Items.Add("Microphone Started."); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Microphone Started."); });
             }
 
             if (speaker != null)
             {
                 speaker.Start();
-                InvokeGUIThread(() => { lb_Log.Items.Add("Speaker Started."); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Speaker Started."); });
             }
         }
 
@@ -100,13 +100,13 @@ namespace VoIPclient
             if (microphone != null)
             {
                 microphone.Stop();
-                InvokeGUIThread(() => { lb_Log.Items.Add("Microphone Stopped."); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Microphone Stopped."); });
             }
 
             if (speaker != null)
             {
                 speaker.Stop();
-                InvokeGUIThread(() => { lb_Log.Items.Add("Speaker Stopped."); });
+                //InvokeGUIThread(() => { lb_Log.Items.Add("Speaker Stopped."); });
             }
         }
 
@@ -149,7 +149,7 @@ namespace VoIPclient
                 tb_Display.Text = "Dzwoni " + e.Item.DialInfo.CallerDisplay.ToString();
                 btn_PickUp.Text = "Odbierz";
                 player.PlayLooping();
-                lb_Log.Items.Add(e.Item.DialInfo.SIPCallerID.ToString());
+                //lb_Log.Items.Add(e.Item.DialInfo.SIPCallerID.ToString());
             });
 
             call = e.Item;
@@ -165,7 +165,7 @@ namespace VoIPclient
                 {
                     if (phoneLineInformation == RegState.RegistrationSucceeded)
                     {
-                        lb_Log.Items.Add("Registration succeeded - Online");
+                        //lb_Log.Items.Add("Registration succeeded - Online");
                         /** lista znajomych **/
                         System.Net.Sockets.TcpClient tcpclnt = new System.Net.Sockets.TcpClient();
                         tcpclnt.Connect(server, 8888);
@@ -196,7 +196,7 @@ namespace VoIPclient
                     }
                     else
                     {
-                        lb_Log.Items.Add("Not registered - Offline: " + phoneLineInformation.ToString());
+                        //lb_Log.Items.Add("Not registered - Offline: " + phoneLineInformation.ToString());
                         if (phoneLineInformation.ToString() == "Error")
                         {
                             this.Hide();
@@ -212,7 +212,7 @@ namespace VoIPclient
         {
             InvokeGUIThread(() =>
             {
-                lb_Log.Items.Add("Callstate changed." + e.State.ToString());
+                //lb_Log.Items.Add("Callstate changed." + e.State.ToString());
             });
 
             if (e.State == CallState.Answered)
@@ -224,7 +224,7 @@ namespace VoIPclient
 
                 InvokeGUIThread(() =>
                 {
-                    lb_Log.Items.Add("Call started.");
+                    //lb_Log.Items.Add("Call started.");
                     tb_Display.Text = "W trakcie połączenia...";
                     player.Stop();
                 });
@@ -251,7 +251,7 @@ namespace VoIPclient
 
                 InvokeGUIThread(() =>
                 {
-                    lb_Log.Items.Add("Call ended.");
+                    //lb_Log.Items.Add("Call ended.");
                     tb_Display.Text = "Połączenie zakończone";
                     btn_PickUp.Text = "Zadzwoń";
                 });
@@ -290,7 +290,7 @@ namespace VoIPclient
 
                 InvokeGUIThread(() =>
                 {
-                    lb_Log.Items.Add("Call accepted.");
+                    //lb_Log.Items.Add("Call accepted.");
                 });
                 return;
             }
@@ -304,7 +304,7 @@ namespace VoIPclient
             {
                 InvokeGUIThread(() =>
                 {
-                    lb_Log.Items.Add("Registratin Failed!");
+                    //lb_Log.Items.Add("Registratin Failed!");
                     tb_Display.Text = "Jesteś OFFLINE";
                 });
                 return;
@@ -335,7 +335,7 @@ namespace VoIPclient
                     call.Reject();
                     InvokeGUIThread(() =>
                     {
-                        lb_Log.Items.Add("Call rejected.");
+                        //lb_Log.Items.Add("Call rejected.");
                         player.Stop();
                     });
                 }
@@ -345,7 +345,7 @@ namespace VoIPclient
                     inComingCall = false;
                     InvokeGUIThread(() =>
                     {
-                        lb_Log.Items.Add("Call hanged up.");
+                        //lb_Log.Items.Add("Call hanged up.");
                         player.Stop();
                     });
                 }
