@@ -65,34 +65,6 @@ namespace VoIPclient
                 localHeld = false;
 
                 ConnectMedia();
-
-                /** lista znajomych **/
-                System.Net.Sockets.TcpClient tcpclnt = new System.Net.Sockets.TcpClient();
-                tcpclnt.Connect(server, 8888);
-
-                System.Net.Sockets.NetworkStream nts = tcpclnt.GetStream();
-                System.IO.StreamReader strread = new System.IO.StreamReader(nts);
-                System.IO.StreamWriter strwrite = new System.IO.StreamWriter(nts);
-
-                strwrite.WriteLine(username + "@");
-                strwrite.Flush();
-
-                string output;
-                while (true)
-                {
-                    output = strread.ReadLine();
-                    if (output != null)
-                        lbx_friends.Items.Add(output);
-                    else
-                    {
-                        strwrite.Close();
-                        strread.Close();
-                        nts.Close();
-                        tcpclnt.Close();
-                        break;
-                    }
-                }
-                /** koniec listy **/
             }
             catch (Exception ex)
             {
@@ -194,6 +166,33 @@ namespace VoIPclient
                     if (phoneLineInformation == RegState.RegistrationSucceeded)
                     {
                         lb_Log.Items.Add("Registration succeeded - Online");
+                        /** lista znajomych **/
+                        System.Net.Sockets.TcpClient tcpclnt = new System.Net.Sockets.TcpClient();
+                        tcpclnt.Connect(server, 8888);
+
+                        System.Net.Sockets.NetworkStream nts = tcpclnt.GetStream();
+                        System.IO.StreamReader strread = new System.IO.StreamReader(nts);
+                        System.IO.StreamWriter strwrite = new System.IO.StreamWriter(nts);
+
+                        strwrite.WriteLine(username + "@");
+                        strwrite.Flush();
+
+                        string output;
+                        while (true)
+                        {
+                            output = strread.ReadLine();
+                            if (output != null)
+                                lbx_friends.Items.Add(output);
+                            else
+                            {
+                                strwrite.Close();
+                                strread.Close();
+                                nts.Close();
+                                tcpclnt.Close();
+                                break;
+                            }
+                        }
+                        /** koniec listy **/
                     }
                     else
                     {
@@ -310,6 +309,16 @@ namespace VoIPclient
                 });
                 return;
             }
+
+            if (tb_Display.Text == username)
+            {
+                InvokeGUIThread(() =>
+                {
+                    tb_Display.Text = "Nie możesz dzwonić do siebie!";
+                });
+                return;
+            }
+                
 
             reDialNumber = tb_Display.Text;
             call = softPhone.CreateCallObject(phoneLine, tb_Display.Text);
@@ -444,7 +453,7 @@ namespace VoIPclient
             }
             catch (Exception ee)
             {
-                Console.WriteLine("Error. " + ee.StackTrace);
+                
             }
         }
     }
