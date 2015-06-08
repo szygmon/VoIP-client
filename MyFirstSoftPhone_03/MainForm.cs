@@ -319,12 +319,15 @@ namespace VoIPclient
                 });
                 return;
             }
-                
 
             reDialNumber = tb_Display.Text;
             call = softPhone.CreateCallObject(phoneLine, tb_Display.Text);
             WireUpCallEvents();
             call.Start();
+            InvokeGUIThread(() =>
+            {
+                tb_Display.Text = "Dzwonię...";
+            });
         }
 
         private void btn_HangUp_Click(object sender, EventArgs e)
